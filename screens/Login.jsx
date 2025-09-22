@@ -47,10 +47,6 @@ export default function Login({ navigation }) {
 
             <PrimaryButton title="Entrar" onPress={handleLogin} />
 
-            <Pressable>
-                <Text style={styles.registerLink}>Ainda não tenho uma conta</Text>
-            </Pressable>
-
             <FooterLogo />
         </View>
     );
@@ -64,7 +60,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
     },
     title: {
-        color: colors.text,
+        color: colors.textBlack,
         fontSize: 26,
         fontWeight: "bold",
         marginBottom: 30,

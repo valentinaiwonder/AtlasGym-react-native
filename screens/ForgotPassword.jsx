@@ -4,6 +4,11 @@ import HeaderLogin from "../components/HeaderLogin";
 import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
 import FooterLogo from "../components/FooterLogo";
+import { useTheme } from "../themeContext";
+
+export default function ForgotPassword() {
+    const { colors } = useTheme();
+
 
 export default function ForgotPassword({ navigation }) {
     const [email, setEmail] = useState("");
@@ -64,47 +69,56 @@ export default function ForgotPassword({ navigation }) {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#000",
-        alignItems: "center",
-        paddingTop: 40,
-    },
-    title: {
-        color: "#fff",
-        fontSize: 22,
-        fontWeight: "bold",
-        marginBottom: 15,
-    },
-    subtitle: {
-        color: "#ccc",
-        fontSize: 14,
-        textAlign: "center",
-        marginBottom: 20,
-        paddingHorizontal: 20,
-    },
-    backText: {
-        marginTop: 10,
-        color: "#9f7aea",
-        fontSize: 14,
-    },
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: "rgba(0,0,0,0.7)",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    modalBox: {
-        backgroundColor: "#fff",
-        padding: 20,
-        borderRadius: 10,
-        width: "80%",
-        alignItems: "center",
-    },
-    modalText: {
-        fontSize: 16,
-        fontWeight: "bold",
-        marginBottom: 15,
-    },
-});
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: colors.background,
+            alignItems: "center",
+            paddingTop: 40,
+        },
+        title: {
+            color: colors.text,
+            fontSize: 22,
+            fontWeight: "bold",
+            marginBottom: 15,
+        },
+        subtitle: {
+            color: colors.secondaryText,
+            fontSize: 14,
+            textAlign: "center",
+            marginBottom: 20,
+            paddingHorizontal: 20,
+        },
+        backText: {
+            marginTop: 10,
+            color: colors.accent,
+            fontSize: 14,
+        },
+        modalOverlay: {
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.7)",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        modalBox: {
+            backgroundColor: colors.modalBackground,
+            padding: 20,
+            borderRadius: 10,
+            width: "80%",
+            alignItems: "center",
+        },
+        modalText: {
+            fontSize: 16,
+            fontWeight: "bold",
+            marginBottom: 15,
+        },
+    });
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Recuperar senha</Text>
+            <Text style={styles.subtitle}>Digite seu e-mail para receber o link</Text>
+            <Text style={styles.backText}>Voltar</Text>
+        </View>
+    );
+}

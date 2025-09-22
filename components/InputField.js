@@ -1,5 +1,9 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import { useTheme } from "../themeContext";
+
+export default function InputField({ label, value, onChangeText }) {
+    const { colors } = useTheme();
 
 export default function InputField({ label, value, onChangeText, placeholder, secureTextEntry }) {
     return (
@@ -17,22 +21,34 @@ export default function InputField({ label, value, onChangeText, placeholder, se
     );
 }
 
-const styles = StyleSheet.create({
-    inputContainer: {
-        width: "85%",
-        marginBottom: 20,
-    },
-    label: {
-        color: "#d6a9ff",
-        marginBottom: 5,
-        fontSize: 14,
-    },
-    input: {
-        backgroundColor: "#111",
-        borderWidth: 1,
-        borderColor: "#9f7aea",
-        borderRadius: 10,
-        padding: 12,
-        color: "#fff",
-    },
-});
+    const styles = StyleSheet.create({
+        inputContainer: {
+            width: "85%",
+            marginBottom: 20,
+        },
+        label: {
+            color: colors.accent,
+            marginBottom: 5,
+            fontSize: 14,
+        },
+        input: {
+            backgroundColor: colors.inputBackground,
+            borderWidth: 1,
+            borderColor: colors.inputBorder,
+            borderRadius: 10,
+            padding: 12,
+            color: colors.text,
+        },
+    });
+
+    return (
+        <View style={styles.inputContainer}>
+            <Text style={styles.label}>{label}</Text>
+            <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChangeText}
+            />
+        </View>
+    );
+}

@@ -1,9 +1,9 @@
 import React from "react";
 import { Pressable, Text, StyleSheet } from "react-native";
 import { useTheme } from "../themeContext";
+import {lightColors} from "../colors";
 
-export default function PrimaryButton({ title, onPress }) {
-    const { colors } = useTheme();
+const colors = lightColors
 
 export default function PrimaryButton({ title, onPress }) {
     return (
@@ -24,15 +24,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     text: {
-        color: colors.text,
+        color: colors.textWhite,
         fontWeight: "bold",
         fontSize: 16,
     },
 });
-
-return (
-    <Pressable style={styles.button} onPress={onPress}>
-        <Text style={styles.text}>{title}</Text>
-    </Pressable>
-);
-}

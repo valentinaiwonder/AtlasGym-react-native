@@ -5,10 +5,9 @@ import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
 import FooterLogo from "../components/FooterLogo";
 import { useTheme } from "../themeContext";
+import {lightColors} from "../colors";
 
-export default function ForgotPassword() {
-    const { colors } = useTheme();
-
+const colors = lightColors
 
 export default function ForgotPassword({ navigation }) {
     const [email, setEmail] = useState("");
@@ -54,7 +53,6 @@ export default function ForgotPassword({ navigation }) {
                             title="Reenviar e-mail"
                             onPress={() => {
                                 console.log("Reenviar para:", email);
-                                // você pode manter o modal ou fechar depois de reenviar
                                 setModalVisible(false);
                             }}
                         />
@@ -64,61 +62,51 @@ export default function ForgotPassword({ navigation }) {
                     </View>
                 </View>
             </Modal>
-
         </View>
     );
 }
 
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: colors.background,
-            alignItems: "center",
-            paddingTop: 40,
-        },
-        title: {
-            color: colors.text,
-            fontSize: 22,
-            fontWeight: "bold",
-            marginBottom: 15,
-        },
-        subtitle: {
-            color: colors.secondaryText,
-            fontSize: 14,
-            textAlign: "center",
-            marginBottom: 20,
-            paddingHorizontal: 20,
-        },
-        backText: {
-            marginTop: 10,
-            color: colors.accent,
-            fontSize: 14,
-        },
-        modalOverlay: {
-            flex: 1,
-            backgroundColor: "rgba(0,0,0,0.7)",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        modalBox: {
-            backgroundColor: colors.modalBackground,
-            padding: 20,
-            borderRadius: 10,
-            width: "80%",
-            alignItems: "center",
-        },
-        modalText: {
-            fontSize: 16,
-            fontWeight: "bold",
-            marginBottom: 15,
-        },
-    });
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Recuperar senha</Text>
-            <Text style={styles.subtitle}>Digite seu e-mail para receber o link</Text>
-            <Text style={styles.backText}>Voltar</Text>
-        </View>
-    );
-}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+        alignItems: "center",
+        paddingTop: 40,
+    },
+    title: {
+        color: colors.text,
+        fontSize: 22,
+        fontWeight: "bold",
+        marginBottom: 15,
+    },
+    subtitle: {
+        color: colors.secondaryText,
+        fontSize: 14,
+        textAlign: "center",
+        marginBottom: 20,
+        paddingHorizontal: 20,
+    },
+    backText: {
+        marginTop: 10,
+        color: colors.accent,
+        fontSize: 14,
+    },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: "rgba(0,0,0,0.7)",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalBox: {
+        backgroundColor: colors.modalBackground,
+        padding: 20,
+        borderRadius: 10,
+        width: "80%",
+        alignItems: "center",
+    },
+    modalText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginBottom: 15,
+    },
+});

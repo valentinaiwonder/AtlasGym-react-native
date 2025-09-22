@@ -5,9 +5,9 @@ import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
 import FooterLogo from "../components/FooterLogo";
 import { useTheme } from "../themeContext";
+import {lightColors} from "../colors";
 
-export default function Login() {
-    const { colors } = useTheme();
+const colors = lightColors
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState("");
@@ -56,29 +56,27 @@ export default function Login({ navigation }) {
     );
 }
 
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: colors.background,
-            alignItems: "center",
-            paddingTop: 40,
-        },
-        title: {
-            color: colors.text,
-            fontSize: 26,
-            fontWeight: "bold",
-            marginBottom: 30,
-        },
-        forgotPassword: {
-            color: colors.secondaryText,
-            fontSize: 14,
-            marginVertical: 10,
-        },
-        registerLink: {
-            color: colors.secondaryText,
-            fontSize: 14,
-            marginTop: 20,
-        },
-    });
-
-}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+        alignItems: "center",
+        paddingTop: 40,
+    },
+    title: {
+        color: colors.text,
+        fontSize: 26,
+        fontWeight: "bold",
+        marginBottom: 30,
+    },
+    forgotPassword: {
+        color: colors.secondaryText,
+        fontSize: 14,
+        marginVertical: 10,
+    },
+    registerLink: {
+        color: colors.secondaryText,
+        fontSize: 14,
+        marginTop: 20,
+    },
+});

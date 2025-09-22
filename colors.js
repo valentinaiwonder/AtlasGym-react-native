@@ -1,7 +1,8 @@
 // colors.js
 export const lightColors = {
     background: "#fff",
-    text: "#000",
+    textBlack: "#000",
+    textWhite: "#fff",
     secondaryText: "#333",
     accent: "#9f7aea",
     inputBackground: "#f2f2f2",

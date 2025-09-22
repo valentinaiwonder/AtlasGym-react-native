@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useTheme } from "../themeContext";
+import {lightColors} from "../colors";
 
-export default function InputField({ label, value, onChangeText }) {
-    const { colors } = useTheme();
+
+const colors = lightColors
 
 export default function InputField({ label, value, onChangeText, placeholder, secureTextEntry }) {
     return (
@@ -40,15 +41,3 @@ export default function InputField({ label, value, onChangeText, placeholder, se
             color: colors.text,
         },
     });
-
-    return (
-        <View style={styles.inputContainer}>
-            <Text style={styles.label}>{label}</Text>
-            <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={onChangeText}
-            />
-        </View>
-    );
-}

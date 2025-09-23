@@ -1,4 +1,3 @@
-// PrimaryButton.js
 import React from "react";
 import { Pressable, Text, StyleSheet } from "react-native";
 import { useTheme } from "../themeContext";

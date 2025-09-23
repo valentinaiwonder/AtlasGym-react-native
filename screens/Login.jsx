@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, Alert } from "react-native";
 import HeaderLogin from "../components/HeaderLogin";

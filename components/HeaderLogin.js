@@ -1,7 +1,6 @@
-// HeaderLogin.js
 import React from "react";
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
-import { useTheme } from "../themeContext"; // Importe o hook
+import { useTheme } from "../themeContext";
 
 export default function HeaderLogin() {
     const { theme, toggleTheme } = useTheme();
@@ -14,7 +13,7 @@ export default function HeaderLogin() {
             width: "100%",
             paddingHorizontal: 20,
             marginBottom: 30,
-            backgroundColor: theme.background,
+            backgroundColor: theme.textBlack,
             padding: 10,
         },
         logo: {
@@ -40,7 +39,6 @@ export default function HeaderLogin() {
     return (
         <View style={styles.header}>
             <Image source={require("../assets/logoo.png")} style={styles.logo} />
-            <Text style={styles.pageText}>Página geral</Text>
             <Pressable style={styles.themeToggle} onPress={toggleTheme}>
                 <Text style={styles.themeToggleText}>Mudar Tema</Text>
             </Pressable>

@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useTheme } from "../themeContext";
+import API_URL from "../api"; // 👈 agora puxa daqui
 
 export default function HomeScreen({ navigation }) {
     const [userData, setUserData] = useState(null);
@@ -18,7 +19,7 @@ export default function HomeScreen({ navigation }) {
             }
 
             try {
-                const response = await axios.get("http://SEU_IP:5000/rota_protegida", {
+                const response = await axios.get(`${API_URL}/rota_protegida`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setUserData(response.data);
@@ -35,7 +36,7 @@ export default function HomeScreen({ navigation }) {
     const handleLogout = async () => {
         const token = await AsyncStorage.getItem("authToken");
         try {
-            await axios.get("http://SEU_IP:5000/logout", {
+            await axios.get(`${API_URL}/logout`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
         } catch (e) {
@@ -70,7 +71,9 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Bem-vindo(a) {userData?.nome || ""}!</Text>
+            <Text style={styles.text}>
+                Bem-vindo(a) {userData?.nome || "Usuário"}!
+            </Text>
 
             <Pressable style={styles.button} onPress={handleLogout}>
                 <Text style={styles.buttonText}>Sair</Text>

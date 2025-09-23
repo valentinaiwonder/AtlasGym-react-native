@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import HeaderLogin from "../components/HeaderLogin";
@@ -10,7 +9,7 @@ import { useTheme } from "../themeContext";
 export default function Login({ navigation }) {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const { theme } = useTheme(); // Use o hook para obter o tema
+    const { theme } = useTheme();
 
     const handleLogin = () => {
         console.log("Login com:", email, senha);

@@ -14,6 +14,7 @@ export default function HeaderLogin() {
             paddingHorizontal: 20,
             marginBottom: 30,
             padding: 10,
+            backgroundColor: theme.textBlack,
         },
         logo: {
             width: 70,

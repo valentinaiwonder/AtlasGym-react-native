@@ -1,3 +1,4 @@
+// ForgotPassword.jsx
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, Modal } from "react-native";
 import HeaderLogin from "../components/HeaderLogin";
@@ -5,13 +6,11 @@ import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
 import FooterLogo from "../components/FooterLogo";
 import { useTheme } from "../themeContext";
-import {lightColors} from "../colors";
-
-const colors = lightColors
 
 export default function ForgotPassword({ navigation }) {
     const [email, setEmail] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
+    const { theme } = useTheme(); // Use o hook para obter o tema
 
     const handleSend = () => {
         if (email) {
@@ -19,27 +18,62 @@ export default function ForgotPassword({ navigation }) {
         }
     };
 
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: theme.background,
+            alignItems: "center",
+            paddingTop: 40,
+        },
+        title: {
+            color: theme.text,
+            fontSize: 22,
+            fontWeight: "bold",
+            marginBottom: 15,
+        },
+        subtitle: {
+            color: theme.secondaryText,
+            fontSize: 14,
+            textAlign: "center",
+            marginBottom: 20,
+            paddingHorizontal: 20,
+        },
+        backText: {
+            marginTop: 10,
+            color: theme.accent,
+            fontSize: 14,
+        },
+        modalOverlay: {
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.7)",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        modalBox: {
+            backgroundColor: theme.modalBackground,
+            padding: 20,
+            borderRadius: 10,
+            width: "80%",
+            alignItems: "center",
+        },
+        modalText: {
+            fontSize: 16,
+            fontWeight: "bold",
+            marginBottom: 15,
+            color: theme.text,
+        },
+    });
+
     return (
         <View style={styles.container}>
             <HeaderLogin />
-
             <Text style={styles.title}>ESQUECI MINHA SENHA</Text>
             <Text style={styles.subtitle}>
                 Podemos entrar em contato com você pelo seu e-mail para uma nova senha.
             </Text>
-
-            <InputField
-                label="E-mail"
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Digite seu e-mail"
-            />
-
+            <InputField label="E-mail" value={email} onChangeText={setEmail} placeholder="Digite seu e-mail" />
             <PrimaryButton title="Enviar e-mail" onPress={handleSend} />
-
             <FooterLogo />
-
-            {/* MODAL */}
             <Modal
                 visible={modalVisible}
                 transparent
@@ -65,48 +99,3 @@ export default function ForgotPassword({ navigation }) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.background,
-        alignItems: "center",
-        paddingTop: 40,
-    },
-    title: {
-        color: colors.text,
-        fontSize: 22,
-        fontWeight: "bold",
-        marginBottom: 15,
-    },
-    subtitle: {
-        color: colors.secondaryText,
-        fontSize: 14,
-        textAlign: "center",
-        marginBottom: 20,
-        paddingHorizontal: 20,
-    },
-    backText: {
-        marginTop: 10,
-        color: colors.accent,
-        fontSize: 14,
-    },
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: "rgba(0,0,0,0.7)",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    modalBox: {
-        backgroundColor: colors.modalBackground,
-        padding: 20,
-        borderRadius: 10,
-        width: "80%",
-        alignItems: "center",
-    },
-    modalText: {
-        fontSize: 16,
-        fontWeight: "bold",
-        marginBottom: 15,
-    },
-});

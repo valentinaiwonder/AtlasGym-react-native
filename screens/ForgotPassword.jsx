@@ -1,4 +1,3 @@
-// ForgotPassword.jsx
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, Modal } from "react-native";
 import HeaderLogin from "../components/HeaderLogin";
@@ -10,7 +9,7 @@ import { useTheme } from "../themeContext";
 export default function ForgotPassword({ navigation }) {
     const [email, setEmail] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
-    const { theme } = useTheme(); // Use o hook para obter o tema
+    const { theme } = useTheme();
 
     const handleSend = () => {
         if (email) {

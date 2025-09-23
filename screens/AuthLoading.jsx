@@ -1,24 +1,19 @@
-// AuthLoading.jsx
 import React, { useEffect } from "react";
-import { View, ActivityIndicator } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, ActivityIndicator, Text } from "react-native";
 
 export default function AuthLoading({ navigation }) {
     useEffect(() => {
-        const checkToken = async () => {
-            const token = await AsyncStorage.getItem("authToken");
-            if (token) {
-                navigation.replace("HomeScreen");
-            } else {
-                navigation.replace("Login");
-            }
-        };
-        checkToken();
-    }, []);
+        const timer = setTimeout(() => {
+            navigation.replace("Login");
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, [navigation]);
 
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <ActivityIndicator size="large" />
+            <ActivityIndicator size="large" color="#9f7aea" />
+            <Text style={{ marginTop: 10, color: "#666" }}>Carregando...</Text>
         </View>
     );
 }

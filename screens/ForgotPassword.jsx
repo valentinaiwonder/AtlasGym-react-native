@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, StyleSheet, Modal } from "react-native";
+import { View, Text, Pressable, StyleSheet, Modal, Alert } from "react-native";
 import HeaderLogin from "../components/HeaderLogin";
 import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
@@ -12,9 +12,11 @@ export default function ForgotPassword({ navigation }) {
     const { theme } = useTheme();
 
     const handleSend = () => {
-        if (email) {
-            setModalVisible(true);
+        if (!email) {
+            Alert.alert("Erro", "Por favor, digite seu e-mail");
+            return;
         }
+        setModalVisible(true);
     };
 
     const styles = StyleSheet.create({
@@ -68,30 +70,27 @@ export default function ForgotPassword({ navigation }) {
             <HeaderLogin />
             <Text style={styles.title}>ESQUECI MINHA SENHA</Text>
             <Text style={styles.subtitle}>
-                Podemos entrar em contato com você pelo seu e-mail para uma nova senha.
+                Digite seu e-mail para recuperar a senha
             </Text>
-            <InputField label="E-mail" value={email} onChangeText={setEmail} placeholder="Digite seu e-mail" />
+
+            <InputField
+                label="E-mail"
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Digite seu e-mail"
+            />
+
             <PrimaryButton title="Enviar e-mail" onPress={handleSend} />
             <FooterLogo />
-            <Modal
-                visible={modalVisible}
-                transparent
-                animationType="fade"
-                onRequestClose={() => setModalVisible(false)}
-            >
+
+            <Modal visible={modalVisible} transparent animationType="fade">
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalBox}>
-                        <Text style={styles.modalText}>Verifique seu e-mail!</Text>
-                        <PrimaryButton
-                            title="Reenviar e-mail"
-                            onPress={() => {
-                                console.log("Reenviar para:", email);
-                                setModalVisible(false);
-                            }}
-                        />
-                        <Pressable onPress={() => navigation.goBack()}>
-                            <Text style={styles.backText}>Voltar ao login</Text>
-                        </Pressable>
+                        <Text style={styles.modalText}>E-mail enviado!</Text>
+                        <PrimaryButton title="OK" onPress={() => {
+                            setModalVisible(false);
+                            navigation.goBack();
+                        }} />
                     </View>
                 </View>
             </Modal>

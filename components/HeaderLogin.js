@@ -13,17 +13,12 @@ export default function HeaderLogin() {
             width: "100%",
             paddingHorizontal: 20,
             marginBottom: 30,
-            backgroundColor: theme.textBlack,
             padding: 10,
         },
         logo: {
             width: 70,
             height: 40,
             resizeMode: "contain",
-        },
-        pageText: {
-            color: theme.text,
-            fontSize: 14,
         },
         themeToggle: {
             padding: 8,
@@ -33,6 +28,7 @@ export default function HeaderLogin() {
         themeToggleText: {
             color: theme.textWhite,
             fontWeight: 'bold',
+            fontSize: 12,
         }
     });
 

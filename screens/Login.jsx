@@ -5,38 +5,24 @@ import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
 import FooterLogo from "../components/FooterLogo";
 import { useTheme } from "../themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import API_URL from "../api"; // 👈 arquivo api.js com http://10.0.2.2:5000
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const { theme } = useTheme();
 
-    const handleLogin = async () => {
-        try {
-            const response = await axios.post(`${API_URL}/login`, {
-                email,
-                senha,
-            });
+    const handleLogin = () => {
+        if (!email || !senha) {
+            Alert.alert("Erro", "Por favor, preencha todos os campos");
+            return;
+        }
 
-            const { token, message } = response.data;
-
-            if (token) {
-                // guarda token no AsyncStorage
-                await AsyncStorage.setItem("authToken", token);
-                // redireciona para HomeScreen
-                navigation.replace("HomeScreen");
-            } else {
-                Alert.alert("Erro", message || "Falha no login.");
-            }
-        } catch (error) {
-            if (error.response) {
-                Alert.alert("Erro", error.response.data.message || "Credenciais inválidas.");
-            } else {
-                Alert.alert("Erro", "Não foi possível conectar ao servidor.");
-            }
+        // Simulação de login - depois conecta com sua API
+        if (email === "admin@academia.com" && senha === "123456") {
+            Alert.alert("Sucesso", "Login realizado!");
+            navigation.replace("HomeScreen");
+        } else {
+            Alert.alert("Erro", "E-mail ou senha incorretos");
         }
     };
 
@@ -48,13 +34,13 @@ export default function Login({ navigation }) {
             paddingTop: 40,
         },
         title: {
-            color: theme.textBlack,
+            color: theme.text,
             fontSize: 26,
             fontWeight: "bold",
             marginBottom: 30,
         },
         forgotPassword: {
-            color: theme.secondaryText,
+            color: theme.accent,
             fontSize: 14,
             marginVertical: 10,
         },
@@ -79,15 +65,11 @@ export default function Login({ navigation }) {
                 secureTextEntry
             />
 
-            <Pressable
-                onPress={() => navigation.navigate("ForgotPassword")}
-                style={{ alignSelf: "flex-end", marginRight: 30 }}
-            >
+            <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
                 <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
             </Pressable>
 
             <PrimaryButton title="Entrar" onPress={handleLogin} />
-
             <FooterLogo />
         </View>
     );

@@ -63,6 +63,11 @@ export default function ForgotPassword({ navigation }) {
             marginBottom: 15,
             color: theme.text,
         },
+        voltar: {
+            color: theme.accent,
+            fontSize: 14,
+            marginVertical: 10,
+        },
     });
 
     return (
@@ -80,6 +85,9 @@ export default function ForgotPassword({ navigation }) {
                 placeholder="Digite seu e-mail"
             />
 
+            <Pressable onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.voltar}>Voltar</Text>
+            </Pressable>
             <PrimaryButton title="Enviar e-mail" onPress={handleSend} />
             <FooterLogo />
 

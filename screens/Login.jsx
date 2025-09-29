@@ -98,6 +98,7 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.container}>
 
+
             <HeaderLogin />
             <Text style={styles.title}>LOGIN</Text>
 

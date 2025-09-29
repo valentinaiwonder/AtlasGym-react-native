@@ -16,7 +16,7 @@ export default function ErrorMessage({ visible, message, onClose, autoClose = tr
             <View style={styles.overlay}>
                 <View style={styles.modal}>
                     <Ionicons name="close-circle" size={48} color="#dc3545" style={{ marginBottom: 10 }} />
-                    <Text style={styles.title}>Erro!</Text>
+                    <Text style={styles.title}>Opa...</Text>
                     <Text style={styles.message}>{message}</Text>
                     <Pressable onPress={onClose} style={styles.button}>
                         <Text style={styles.buttonText}>Fechar</Text>

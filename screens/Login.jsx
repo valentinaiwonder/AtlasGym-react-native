@@ -98,7 +98,6 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.container}>
 
-
             <HeaderLogin />
             <Text style={styles.title}>LOGIN</Text>
 
@@ -128,7 +127,7 @@ export default function Login({ navigation }) {
             {loading ? (
                 <ActivityIndicator size="large" color={theme.accent} style={styles.loadingContainer} />
             ) : (
-                <PrimaryButton title="Entrar na Academia" onPress={realizarLogin} />
+                <PrimaryButton title="Entrar" onPress={realizarLogin} />
             )}
 
             <Text style={styles.serverInfo}>

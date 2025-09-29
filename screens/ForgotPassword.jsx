@@ -5,6 +5,7 @@ import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
 import FooterLogo from "../components/FooterLogo";
 import { useTheme } from "../themeContext";
+import api, { API_URL } from "../api";
 
 export default function ForgotPassword({ navigation }) {
     const [email, setEmail] = useState("");

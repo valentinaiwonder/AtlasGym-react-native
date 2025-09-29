@@ -13,6 +13,7 @@ export const PaginaInicial = () => {
     const slideAnimation = useState(new Animated.Value(0))[0];
     const navigation = useNavigation();
 
+
     useEffect(() => {
         const checarUsuario = async () => {
             const tipo = await AsyncStorage.getItem('tipo');

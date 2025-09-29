@@ -8,112 +8,38 @@ import FooterLogo from "../components/FooterLogo";
 import { useTheme } from "../themeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api, { API_URL } from "../api";
+import {fetch} from "expo/fetch";
 
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const { theme } = useTheme();
 
-    const testarConexaoAPI = async () => {
-        try {
-            console.log("🔍 Testando conexão com a API...");
-            const response = await api.get("/");
-            console.log("✅ API respondendo:", response.status);
-            return true;
-        } catch (error) {
-            console.log("❌ Falha na conexão com a API:", error.message);
-            return false;
-        }
-    };
-
-    const handleLogin = async () => {
-        if (!email.trim() || !senha.trim()) {
-            Alert.alert("Erro", "Por favor, preencha todos os campos");
-            return;
-        }
-
-        // Primeiro testa se a API está respondendo
-        const apiConectada = await testarConexaoAPI();
-        if (!apiConectada) {
-            Alert.alert(
-                "Erro de Conexão",
-                `Não foi possível conectar ao servidor:\n${API_URL}\n\nVerifique:\n• Se a API está rodando\n• Se o IP está correto\n• Sua conexão de rede`,
-                [{ text: "OK" }]
-            );
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            console.log("🔐 Tentando login...", { email: email.trim().toLowerCase() });
-
-            const response = await api.post("/login", {
-                email: email.trim().toLowerCase(),
+    async function realizarLogin() {
+        let retorno = await fetch("http://10.92.3.202:5000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email.trim(),
                 senha: senha.trim()
-            });
+            })
+        })
 
-            console.log("✅ Resposta do login:", response.data);
+        retorno = await retorno.json();
 
-            const { token, message } = response.data;
+        console.log(retorno);
 
-            if (token) {
-                // Salva token no AsyncStorage
-                await AsyncStorage.setItem("authToken", token);
-                console.log("✅ Token salvo com sucesso");
-
-                Alert.alert("Sucesso", message || "Login realizado com sucesso!");
-                navigation.replace("HomeScreen");
-            } else {
-                Alert.alert("Erro", message || "Token não recebido do servidor");
-            }
-
-        } catch (error) {
-            console.log("❌ Erro completo no login:", {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status
-            });
-
-            if (error.response) {
-                const { status, data } = error.response;
-
-                switch (status) {
-                    case 400:
-                        Alert.alert("Erro", data.message || "Dados inválidos");
-                        break;
-                    case 401:
-                        if (data.message && data.message.includes("inativado")) {
-                            Alert.alert("Conta Inativada", "Sua conta foi temporariamente desativada. Entre em contato com o administrador.");
-                        } else if (data.message && data.message.includes("Tentativas excedidas")) {
-                            Alert.alert("Segurança", "Muitas tentativas incorretas. Conta bloqueada por segurança.");
-                        } else {
-                            Alert.alert("Erro", data.message || "E-mail ou senha incorretos");
-                        }
-                        break;
-                    case 404:
-                        Alert.alert("Usuário Não Encontrado", "Verifique seu e-mail e tente novamente");
-                        break;
-                    case 500:
-                        Alert.alert("Erro no Servidor", "Tente novamente em alguns instantes");
-                        break;
-                    default:
-                        Alert.alert("Erro", data?.message || `Erro ${status}`);
-                }
-            } else if (error.request) {
-                Alert.alert(
-                    "Sem Conexão",
-                    `Não foi possível conectar ao servidor:\n${API_URL}\n\nVerifique sua conexão de internet.`
-                );
-            } else {
-                Alert.alert("Erro Inesperado", error.message);
-            }
-        } finally {
-            setLoading(false);
+        if (retorno.error === true) {
+            setError(retorno.message);
         }
-    };
+
+    }
+
 
     const styles = StyleSheet.create({
         container: {
@@ -148,6 +74,10 @@ export default function Login({ navigation }) {
 
     return (
         <View style={styles.container}>
+            {error && (
+                <Text>{error}</Text>
+            )}
+
             <HeaderLogin />
             <Text style={styles.title}>LOGIN ACADEMIA</Text>
 
@@ -177,7 +107,7 @@ export default function Login({ navigation }) {
             {loading ? (
                 <ActivityIndicator size="large" color={theme.accent} style={styles.loadingContainer} />
             ) : (
-                <PrimaryButton title="Entrar na Academia" onPress={handleLogin} />
+                <PrimaryButton title="Entrar na Academia" onPress={realizarLogin} />
             )}
 
             <Text style={styles.serverInfo}>

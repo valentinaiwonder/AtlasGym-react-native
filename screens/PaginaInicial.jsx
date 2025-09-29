@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Image, Dimensions, ScrollView, Animated, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -10,6 +12,19 @@ export const PaginaInicial = () => {
     const [loading, setLoading] = useState(true);
     const slideAnimation = useState(new Animated.Value(0))[0];
     const navigation = useNavigation();
+
+    useEffect(() => {
+        const checarUsuario = async () => {
+            const tipo = await AsyncStorage.getItem('tipo');
+            if (tipo !== '1') {
+                Alert.alert('Erro', 'Você não pode acessar esta página!', [
+                    { text: 'OK', onPress: () => navigation.navigate('Login') }
+                ]);
+            }
+        };
+
+        checarUsuario();
+    }, []);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);

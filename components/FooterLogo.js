@@ -2,9 +2,7 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 
 export default function FooterLogo() {
-    return (
-        <Image source={require("../assets/logoo.png")} style={styles.footerLogo} />
-    );
+
 }
 
 const styles = StyleSheet.create({

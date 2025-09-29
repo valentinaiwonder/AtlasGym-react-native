@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
-const App = () => {
+export const PaginaInicial = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [stats, setStats] = useState({ hours: 0, muscles: 0, days: 0 });
     const [loading, setLoading] = useState(true);
@@ -33,11 +33,11 @@ const App = () => {
         }],
     };
 
-    // Buscando dados da API
+
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await fetch('http://10.92.3.184:5000/stats'); // substitua pela sua rota
+                const response = await fetch('http://10.92.3.184:5000/stats');
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
                 setStats({
@@ -150,6 +150,8 @@ const App = () => {
                 <Image source={require("../assets/halter.png")} style={styles.bottomIcon} />
             </View>
         </SafeAreaView>
+
+
     );
 };
 
@@ -188,4 +190,3 @@ const styles = StyleSheet.create({
     logoutText: { fontSize: 16, color: '#f00', marginLeft: 10 },
 });
 
-export default App;

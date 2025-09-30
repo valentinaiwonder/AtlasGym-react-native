@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
         setLoading(true);
         setMessageText("");
         try {
-            let retorno = await fetch("http://10.92.3.202:5000/login", {
+            let retorno = await fetch("http://10.92.3.168:5000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

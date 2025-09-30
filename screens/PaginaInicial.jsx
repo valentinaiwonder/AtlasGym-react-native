@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Image, Dimensio
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
+import QuestionModal from '../components/QuestionMessage';
 
 const { width } = Dimensions.get('window');
 
@@ -11,21 +12,9 @@ export const PaginaInicial = () => {
     const [stats, setStats] = useState({ hours: 0, muscles: 0, days: 0 });
     const [loading, setLoading] = useState(true);
     const slideAnimation = useState(new Animated.Value(0))[0];
+    const [questionVisible, setQuestionVisible] = useState(false);
     const navigation = useNavigation();
 
-
-    useEffect(() => {
-        const checarUsuario = async () => {
-            const tipo = await AsyncStorage.getItem('tipo');
-            if (tipo !== '1') {
-                Alert.alert('Erro', 'Você não pode acessar esta página!', [
-                    { text: 'OK', onPress: () => navigation.navigate('Login') }
-                ]);
-            }
-        };
-
-        checarUsuario();
-    }, []);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -37,7 +26,16 @@ export const PaginaInicial = () => {
     };
 
     const handleLogout = () => {
+        setQuestionVisible(true);
+    };
+
+    const confirmLogout = async () => {
+        setQuestionVisible(false);
         navigation.navigate('Login');
+    };
+
+    const cancelLogout = () => {
+        setQuestionVisible(false);
     };
 
     const slideTransform = {
@@ -72,103 +70,114 @@ export const PaginaInicial = () => {
     }, []);
 
     return (
-        <SafeAreaView style={styles.container}>
-            <Animated.View style={[styles.mainContent, slideTransform]}>
-                {/* Header */}
-                <View style={styles.header}>
-                    <Image source={require("../assets/logoo.png")} style={styles.image} />
-                    <TouchableOpacity style={styles.menuIconContainer} onPress={toggleMenu}>
-                        <View style={styles.menuIconLine} />
-                        <View style={styles.menuIconLine} />
-                        <View style={styles.menuIconLine} />
-                    </TouchableOpacity>
-                </View>
-
-                {/* Welcome */}
-                <View style={styles.welcomeSection}>
-                    <Text style={styles.welcomeText}>Bem-vinda, Vivian!</Text>
-                </View>
-
-                {/* Card Branco */}
-                <View style={styles.card}>
-                    <View style={styles.summarySection}>
-                        <Text style={styles.summaryTitle}>
-                            Sua <Text style={styles.boldText}>semana</Text> de treinos
-                        </Text>
-                        <Text style={styles.dropdownArrow}>⌄</Text>
+        <>
+            <SafeAreaView style={styles.container}>
+                <Animated.View style={[styles.mainContent, slideTransform]}>
+                    {/* Header */}
+                    <View style={styles.header}>
+                        <Image source={require("../assets/logoo.png")} style={styles.image} />
+                        <TouchableOpacity style={styles.menuIconContainer} onPress={toggleMenu}>
+                            <View style={styles.menuIconLine} />
+                            <View style={styles.menuIconLine} />
+                            <View style={styles.menuIconLine} />
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.statsContainer}>
-                        {loading ? (
-                            <ActivityIndicator size="large" color="#2E0057" />
-                        ) : (
-                            <>
-                                <View style={styles.statItem}>
-                                    <Text style={styles.statNumber}>{stats.hours}</Text>
-                                    <Text style={styles.statLabel}>horas{'\n'}treinadas</Text>
-                                </View>
-                                <View style={styles.statItem}>
-                                    <Text style={styles.statNumber}>{stats.muscles}</Text>
-                                    <Text style={styles.statLabel}>músculos{'\n'}trabalhados</Text>
-                                </View>
-                                <View style={styles.statItem}>
-                                    <Text style={styles.statNumber}>{stats.days}</Text>
-                                    <Text style={styles.statLabel}>dias de{'\n'}exercício</Text>
-                                </View>
-                            </>
-                        )}
+                    {/* Welcome */}
+                    <View style={styles.welcomeSection}>
+                        <Text style={styles.welcomeText}>Bem-vinda, Vivian!</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.progressButton}>
-                        <Text style={styles.progressButtonText}>Ver seu progresso</Text>
-                    </TouchableOpacity>
-                </View>
-            </Animated.View>
+                    {/* Card Branco */}
+                    <View style={styles.card}>
+                        <View style={styles.summarySection}>
+                            <Text style={styles.summaryTitle}>
+                                Sua <Text style={styles.boldText}>semana</Text> de treinos
+                            </Text>
+                            <Text style={styles.dropdownArrow}>⌄</Text>
+                        </View>
 
-            {/* Sidebar */}
-            {isMenuOpen && (
-                <View style={styles.sidebar}>
-                    <View style={styles.sidebarHeader}>
-                        <Image source={require("../assets/icone.png")} style={styles.medalIcon} />
-                        <Text style={styles.profileName}>Vivian</Text>
+                        <View style={styles.statsContainer}>
+                            {loading ? (
+                                <ActivityIndicator size="large" color="#2E0057" />
+                            ) : (
+                                <>
+                                    <View style={styles.statItem}>
+                                        <Text style={styles.statNumber}>{stats.hours}</Text>
+                                        <Text style={styles.statLabel}>horas{'\n'}treinadas</Text>
+                                    </View>
+                                    <View style={styles.statItem}>
+                                        <Text style={styles.statNumber}>{stats.muscles}</Text>
+                                        <Text style={styles.statLabel}>músculos{'\n'}trabalhados</Text>
+                                    </View>
+                                    <View style={styles.statItem}>
+                                        <Text style={styles.statNumber}>{stats.days}</Text>
+                                        <Text style={styles.statLabel}>dias de{'\n'}exercício</Text>
+                                    </View>
+                                </>
+                            )}
+                        </View>
+
+                        <TouchableOpacity style={styles.progressButton}>
+                            <Text style={styles.progressButtonText}>Ver seu progresso</Text>
+                        </TouchableOpacity>
                     </View>
-                    <ScrollView style={styles.menuItemsContainer}>
-                        <TouchableOpacity style={styles.menuItem}>
-                            <Image source={require("../assets/casa.png")} style={styles.menuItemIcon} />
-                            <Text style={styles.menuText}>Página inicial</Text>
+                </Animated.View>
+
+                {/* Sidebar */}
+                {isMenuOpen && (
+                    <View style={styles.sidebar}>
+                        <View style={styles.sidebarHeader}>
+                            <Image source={require("../assets/icone.png")} style={styles.medalIcon} />
+                            <Text style={styles.profileName}>Vivian</Text>
+                        </View>
+                        <ScrollView style={styles.menuItemsContainer}>
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Image source={require("../assets/casa.png")} style={styles.menuItemIcon} />
+                                <Text style={styles.menuText}>Página inicial</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Image source={require("../assets/lista.png")} style={styles.menuItemIcon} />
+                                <Text style={styles.menuText}>Área do aluno</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Image source={require("../assets/editar.png")} style={styles.menuItemIcon} />
+                                <Text style={styles.menuText}>Editar informações</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Image source={require("../assets/registros.png")} style={styles.menuItemIcon} />
+                                <Text style={styles.menuText}>Registros de bioimpedância</Text>
+                            </TouchableOpacity>
+                        </ScrollView>
+                        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                            <Image source={require("../assets/excluir.png")} style={styles.menuItemIcon} />
+                            <Text style={styles.logoutText}>Sair</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem}>
-                            <Image source={require("../assets/lista.png")} style={styles.menuItemIcon} />
-                            <Text style={styles.menuText}>Área do aluno</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem}>
-                            <Image source={require("../assets/editar.png")} style={styles.menuItemIcon} />
-                            <Text style={styles.menuText}>Editar informações</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem}>
-                            <Image source={require("../assets/registros.png")} style={styles.menuItemIcon} />
-                            <Text style={styles.menuText}>Registros de bioimpedância</Text>
-                        </TouchableOpacity>
-                    </ScrollView>
-                    <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                        <Image source={require("../assets/excluir.png")} style={styles.menuItemIcon} />
-                        <Text style={styles.logoutText}>Sair</Text>
+                    </View>
+                )}
+
+                {/* Bottom Nav */}
+                <View style={styles.bottomNav}>
+                    <Image source={require("../assets/medalha.png")} style={styles.bottomIcon} />
+                    <TouchableOpacity style={styles.plusButton}>
+                        <Text style={styles.plusText}>+</Text>
                     </TouchableOpacity>
+                    <Image source={require("../assets/halter.png")} style={styles.bottomIcon} />
                 </View>
-            )}
+            </SafeAreaView>
 
-            {/* Bottom Nav */}
-            <View style={styles.bottomNav}>
-                <Image source={require("../assets/medalha.png")} style={styles.bottomIcon} />
-                <TouchableOpacity style={styles.plusButton}>
-                    <Text style={styles.plusText}>+</Text>
-                </TouchableOpacity>
-                <Image source={require("../assets/halter.png")} style={styles.bottomIcon} />
-            </View>
-        </SafeAreaView>
+            <QuestionModal
+                visible={questionVisible}
+                question="Deseja realmente sair?"
+                onConfirm={confirmLogout}
+                onCancel={cancelLogout}
+                confirmText="Sim"
+                cancelText="Cancelar"
+            />
 
-
+        </>
     );
+
 };
 
 const styles = StyleSheet.create({

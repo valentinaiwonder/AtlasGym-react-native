@@ -8,22 +8,22 @@ export default function AuthLoading({ navigation }) {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                console.log("🔍 Verificando autenticação...");
+                console.log(" Verificando autenticação...");
                 const token = await AsyncStorage.getItem("authToken");
 
                 if (!token) {
-                    console.log("❌ Nenhum token encontrado, redirecionando para Login");
+                    console.log(" Nenhum token encontrado, redirecionando para Login");
                     navigation.replace("Login");
                     return;
                 }
 
-                console.log("✅ Token encontrado, validando com a API...");
+                console.log(" Token encontrado, validando com a API...");
 
                 try {
                     const response = await api.get("/");
-                    console.log("✅ API está respondendo");
+                    console.log(" API está respondendo");
                 } catch (apiError) {
-                    console.log("❌ API não está respondendo:", apiError.message);
+                    console.log(" API não está respondendo:", apiError.message);
                     Alert.alert(
                         "Erro de Conexão",
                         "Não foi possível conectar ao servidor. Verifique se a API está rodando.",
@@ -35,11 +35,11 @@ export default function AuthLoading({ navigation }) {
 
                 try {
                     await api.get("/logout");
-                    console.log("✅ Token válido, indo para HomeScreen");
+                    console.log(" Token válido, indo para HomeScreen");
                     navigation.replace("HomeScreen");
                 } catch (error) {
                     if (error.response?.status === 401) {
-                        console.log("❌ Token inválido ou expirado");
+                        console.log(" Token inválido ou expirado");
                         await AsyncStorage.removeItem("authToken");
                         Alert.alert("Sessão Expirada", "Faça login novamente");
                     }
@@ -47,7 +47,7 @@ export default function AuthLoading({ navigation }) {
                 }
 
             } catch (error) {
-                console.error("❌ Erro geral:", error);
+                console.error(" Erro geral:", error);
                 Alert.alert("Erro", "Ocorreu um erro inesperado");
                 navigation.replace("Login");
             }

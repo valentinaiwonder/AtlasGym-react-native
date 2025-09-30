@@ -31,6 +31,7 @@ export const PaginaInicial = () => {
 
     const confirmLogout = async () => {
         setQuestionVisible(false);
+        await AsyncStorage.removeItem('token');
         navigation.navigate('Login');
     };
 

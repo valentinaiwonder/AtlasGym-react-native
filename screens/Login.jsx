@@ -39,7 +39,19 @@ export default function Login({ navigation }) {
             retorno = await retorno.json();
 
             console.log(retorno);
+            if (retorno.token) {
+                await AsyncStorage.setItem("authToken", retorno.token);
+                if (retorno.tipo !== 1) {
+                    setMessageText("Acesso negado para seu tipo de usuário.");
+                    setErrorVisible(true);
+                    setSuccessVisible(false);
+                    return; // Sai da função, não navega
+                }
 
+                setSuccessVisible(true);
+                setErrorVisible(false);
+                navigation.replace("PaginaInicial");
+            }
             if (retorno.error === true || retorno.error === "true") {
                 setMessageText(retorno.message || "Erro ao realizar login");
                 setErrorVisible(true);

@@ -17,8 +17,22 @@ export const PaginaInicial = () => {
     const [questionVisible, setQuestionVisible] = useState(false);
     const navigation = useNavigation(); // Hook para navegação entre telas
     const [selectTreinos, setSelectTreinos] = useState("semana");
+    const [nomeUsuario, setNomeUsuario] = useState("Visitante");
 
-    const nome = AsyncStorage.getItem("nome")
+    useEffect(() => {
+        const fetchUserName = async () => {
+            try {
+                const nome = await AsyncStorage.getItem("nome");
+                if (nome !== null) {
+                    setNomeUsuario(nome.split(" ")[0]);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar o nome do usuário:", error);
+            }
+        };
+
+        fetchUserName();
+    }, []);
 
     // visibilidade do menu
     const toggleMenu = () => {
@@ -88,7 +102,7 @@ export const PaginaInicial = () => {
                     </View>
 
                     <View style={styles.welcomeSection}>
-                        <Text style={styles.welcomeText}>Bem-vinda, Vivian!</Text>
+                        <Text style={styles.welcomeText}>Bem-vinda, {nomeUsuario}!</Text>
                     </View>
 
                     <View style={styles.card}>
@@ -97,7 +111,7 @@ export const PaginaInicial = () => {
 
                             <View style={styles.pickerContainer}>
                                 <Picker
-                                    selectTreinos={selectTreinos}
+                                    selectedValue={selectTreinos}
                                     onValueChange={(itemValue) => setSelectTreinos(itemValue)}
                                     style={styles.picker}
                                 >
@@ -136,7 +150,7 @@ export const PaginaInicial = () => {
                     <View style={styles.sidebar}>
                         <View style={styles.sidebarHeader}>
                             <Image source={require("../assets/icone.png")} style={styles.medalIcon} />
-                            <Text style={styles.profileName}>Vivian</Text>
+                            <Text style={styles.profileName}>{nomeUsuario}</Text>
                         </View>
                         <ScrollView style={styles.menuItemsContainer}>
                             <TouchableOpacity style={styles.menuItem}>

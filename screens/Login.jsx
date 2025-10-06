@@ -22,12 +22,11 @@ export default function Login({ navigation }) {
     const [messageText, setMessageText] = useState("");
     const { theme } = useTheme();
 
-
     async function realizarLogin() {
         setLoading(true);
         setMessageText("");
         try {
-            let retorno = await fetch("http://10.92.3.168:5000/login", {
+            let retorno = await fetch("http://10.92.3.154:5000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -36,10 +35,18 @@ export default function Login({ navigation }) {
                 }),
             });
 
-            retorno = await retorno.json();
+            if (!retorno.ok) {
+                throw new Error("Erro ao se comunicar com o servidor");
+            }
 
+            retorno = await retorno.json();
             console.log(retorno);
-            if (retorno.token) {
+
+            if (retorno && retorno.nome) {
+                await AsyncStorage.setItem("nome", retorno.nome);
+            }
+
+            if (retorno && retorno.token) {
                 await AsyncStorage.setItem("authToken", retorno.token);
                 if (retorno.tipo !== 1) {
                     setMessageText("Acesso negado para seu tipo de usuário.");
@@ -143,7 +150,7 @@ export default function Login({ navigation }) {
             )}
 
             <Text style={styles.serverInfo}>
-                Conectando em: {"http://10.92.3.202:5000"}
+                Conectando em: {"http://10.92.3.154:5000"}
             </Text>
 
             <FooterLogo />

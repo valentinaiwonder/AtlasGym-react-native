@@ -18,6 +18,8 @@ export const PaginaInicial = () => {
     const navigation = useNavigation(); // Hook para navegação entre telas
     const [selectTreinos, setSelectTreinos] = useState("semana");
 
+    const nome = AsyncStorage.getItem("nome")
+
     // visibilidade do menu
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -46,7 +48,7 @@ export const PaginaInicial = () => {
         transform: [{
             translateX: slideAnimation.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, -width * 0.7],
+                outputRange: [0, -width * 0.7], // deslizando o menu para a esquerda
             }),
         }],
     };
@@ -109,7 +111,7 @@ export const PaginaInicial = () => {
 
                         <View style={styles.statsContainer}>
                             {loading ? (
-                                <ActivityIndicator size="large" color="#2E0057" />
+                                <ActivityIndicator size="large" color="#2E0057" /> // indicador de carregamento
                             ) : (
                                 <>
                                     <View style={styles.statItem}>

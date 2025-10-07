@@ -17,6 +17,7 @@ export const PaginaInicial = () => {
     const [questionVisible, setQuestionVisible] = useState(false);
     const navigation = useNavigation(); // Hook para navegação entre telas
     const [selectTreinos, setSelectTreinos] = useState("semana");
+    const [nomeUsuario, setNomeUsuario] = useState("Visitante");
 
     useEffect(() => {
         const fetchUserName = async () => {
@@ -56,7 +57,7 @@ export const PaginaInicial = () => {
     const cancelLogout = () => {
         setQuestionVisible(false);
     };
-    // animação do menu
+
     const slideTransform = {
         transform: [{
             translateX: slideAnimation.interpolate({
@@ -101,7 +102,7 @@ export const PaginaInicial = () => {
                     </View>
 
                     <View style={styles.welcomeSection}>
-                        <Text style={styles.welcomeText}>Bem-vinda, Vivian!</Text>
+                        <Text style={styles.welcomeText}>Bem-vinda, {nomeUsuario}!</Text>
                     </View>
 
                     <View style={styles.card}>
@@ -149,7 +150,7 @@ export const PaginaInicial = () => {
                     <View style={styles.sidebar}>
                         <View style={styles.sidebarHeader}>
                             <Image source={require("../assets/icone.png")} style={styles.medalIcon} />
-                            <Text style={styles.profileName}>Vivian</Text>
+                            <Text style={styles.profileName}>{nomeUsuario}</Text>
                         </View>
                         <ScrollView style={styles.menuItemsContainer}>
                             <TouchableOpacity style={styles.menuItem}>

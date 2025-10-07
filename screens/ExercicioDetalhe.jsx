@@ -1,4 +1,3 @@
-// pages/ExercicioDetalhe.jsx
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';

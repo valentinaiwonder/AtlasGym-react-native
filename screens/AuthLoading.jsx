@@ -1,4 +1,3 @@
-// screens/AuthLoading.jsx
 import api, { API_URL } from "../api";
 import React, { useEffect } from "react";
 import { View, ActivityIndicator, Text, Alert } from "react-native";

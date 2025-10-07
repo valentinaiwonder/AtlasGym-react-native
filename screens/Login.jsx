@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, StyleSheet, Alert, ActivityIndicator } from "react-native";
+import { View, Text, Pressable, StyleSheet, Alert, ActivityIndicator, TouchableOpacity, Image } from "react-native";
 import HeaderLogin from "../components/HeaderLogin";
 import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
@@ -21,6 +21,11 @@ export default function Login({ navigation }) {
     const [errorVisible, setErrorVisible] = useState(false);
     const [messageText, setMessageText] = useState("");
     const { theme } = useTheme();
+    const [senhaVisivel, setSenhaVisivel] = useState(false);
+
+    const visibilidadeDaSenha = () => {
+        setSenhaVisivel(!senhaVisivel);
+    };
 
     async function realizarLogin() {
         setLoading(true);
@@ -112,6 +117,28 @@ export default function Login({ navigation }) {
             marginTop: 10,
             fontStyle: 'italic',
         },
+        input: {
+            height: 50,
+            borderColor: "#ccc",
+            borderWidth: 1,
+            marginBottom: 15,
+            paddingLeft: 10,
+        },
+        inputContainer: {
+            flexDirection: "row",
+            alignItems: "center",
+            position: "relative",
+        },
+        eyeIconContainer: {
+            position: "absolute",
+            right: 10,
+            padding: 5,
+        },
+        eyeIcon: {
+            width: 27,
+            height: 27,
+            marginTop: 9,
+        },
     });
 
     return (
@@ -121,6 +148,7 @@ export default function Login({ navigation }) {
             <Text style={styles.title}>LOGIN</Text>
 
             <InputField
+                style={styles.input}
                 label="E-mail"
                 value={email}
                 onChangeText={setEmail}
@@ -128,13 +156,21 @@ export default function Login({ navigation }) {
                 autoCapitalize="none"
                 keyboardType="email-address"
             />
-            <InputField
-                label="Senha"
-                value={senha}
-                onChangeText={setSenha}
-                placeholder="Digite sua senha"
-                secureTextEntry
-            />
+            <View style={styles.inputContainer} >
+                <InputField
+                    style={styles.input}
+                    label="Senha"
+                    value={senha}
+                    onChangeText={setSenha}
+                    placeholder="Digite sua senha"
+                    secureTextEntry={!senhaVisivel}
+                />
+
+                <TouchableOpacity onPress={visibilidadeDaSenha} style={styles.eyeIconContainer}>
+                    <Image source={senhaVisivel ? require("../assets/eyeiconview.png") : require("../assets/eyeiconblock.png")} style={styles.eyeIcon}/>
+                </TouchableOpacity>
+
+            </View>
 
             <Pressable
                 onPress={() => navigation.navigate("ForgotPassword")}
@@ -150,7 +186,7 @@ export default function Login({ navigation }) {
             )}
 
             <Text style={styles.serverInfo}>
-                Conectando em: {"http://10.92.3.154:5000"}
+                Conectando em: {"http://127.0.0.1:5000"}
             </Text>
 
             <FooterLogo />

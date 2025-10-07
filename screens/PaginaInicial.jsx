@@ -17,7 +17,6 @@ export const PaginaInicial = () => {
     const [questionVisible, setQuestionVisible] = useState(false);
     const navigation = useNavigation(); // Hook para navegação entre telas
     const [selectTreinos, setSelectTreinos] = useState("semana");
-    const [nomeUsuario, setNomeUsuario] = useState("Visitante");
 
     useEffect(() => {
         const fetchUserName = async () => {
@@ -62,7 +61,7 @@ export const PaginaInicial = () => {
         transform: [{
             translateX: slideAnimation.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, -width * 0.7], // deslizando o menu para a esquerda
+                outputRange: [0, -width * 0.7],
             }),
         }],
     };
@@ -102,7 +101,7 @@ export const PaginaInicial = () => {
                     </View>
 
                     <View style={styles.welcomeSection}>
-                        <Text style={styles.welcomeText}>Bem-vinda, {nomeUsuario}!</Text>
+                        <Text style={styles.welcomeText}>Bem-vinda, Vivian!</Text>
                     </View>
 
                     <View style={styles.card}>
@@ -111,7 +110,7 @@ export const PaginaInicial = () => {
 
                             <View style={styles.pickerContainer}>
                                 <Picker
-                                    selectedValue={selectTreinos}
+                                    selectTreinos={selectTreinos}
                                     onValueChange={(itemValue) => setSelectTreinos(itemValue)}
                                     style={styles.picker}
                                 >
@@ -125,7 +124,7 @@ export const PaginaInicial = () => {
 
                         <View style={styles.statsContainer}>
                             {loading ? (
-                                <ActivityIndicator size="large" color="#2E0057" /> // indicador de carregamento
+                                <ActivityIndicator size="large" color="#2E0057" />
                             ) : (
                                 <>
                                     <View style={styles.statItem}>
@@ -150,7 +149,7 @@ export const PaginaInicial = () => {
                     <View style={styles.sidebar}>
                         <View style={styles.sidebarHeader}>
                             <Image source={require("../assets/icone.png")} style={styles.medalIcon} />
-                            <Text style={styles.profileName}>{nomeUsuario}</Text>
+                            <Text style={styles.profileName}>Vivian</Text>
                         </View>
                         <ScrollView style={styles.menuItemsContainer}>
                             <TouchableOpacity style={styles.menuItem}>

@@ -1,3 +1,4 @@
+/*
 // pages/Treino.jsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
@@ -10,7 +11,7 @@ const Treino = () => {
     const [exercicios, setExercicios] = useState([]);
 
     useEffect(() => {
-        fetch(`http://10.92.3.201:5000/exercicios/${treino.id}`)
+        fetch(`http://192.168.1.127:5000/exercicios/${treino.id}`)
             .then(res => res.json())
             .then(data => setExercicios(data))
             .catch(err => console.error('Erro ao buscar exercícios:', err));
@@ -110,3 +111,4 @@ const styles = StyleSheet.create({
 });
 
 export default Treino;
+*/

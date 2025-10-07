@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -66,4 +67,4 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "600",
     },
-});
+});*/
